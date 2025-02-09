@@ -16,23 +16,19 @@ let config = {
   h: Number(container.getAttribute('height')),
   x: 0,
   y: Number(container.getAttribute('height')) / 2,
-  numPoints: 100,
+  numPoints: 20, // numero de puntos a lo largo de la linea de onda
   oscillate: {
-    velGrades: 1,
-    maxGrades: 360-1,
+    velGrades: 1, // velocidad por defecto de oscilacion
+    maxGrades: 360-1, // grados maximos para sin()
     gradeOrigin: 0,
-    sizeCrest: 20/2 // px
+    sizeCrest: 10/2 // tamanio de la cresta de onda (px)
   }
 }
 
-let sizeC = {
-  w: clientContainer.width,
-  h: clientContainer.height
-}
-
 // oscillate
-function oscillate ( vel = config.oscillate.velGrades, resistance = 0, sentido = true ) {
+function oscillate ( vel = config.oscillate.velGrades, resistance = 0) {
   /**
+   * @param { number } vel - velocidad de ocilacion ( grados )
    * @param { number } resistance - disminuye la velocidad con la que se propagan los grados ( 0 - 1)
    */
   if(config.oscillate.velGrades != vel) config.oscillate.velGrades = vel
@@ -75,8 +71,6 @@ function oscillate ( vel = config.oscillate.velGrades, resistance = 0, sentido =
 
     // point in the body
     const selectCommand = p == 0 ? '' : command
-
-    if(isNaN(y)) console.log(y, p, grade)
 
     if(p + 1 < config.numPoints) {
       path += ` ${selectCommand}${x} ${y}`
